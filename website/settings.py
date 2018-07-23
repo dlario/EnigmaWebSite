@@ -26,7 +26,6 @@ ALLOWED_HOSTS = []
 
 SECRET_KEY = 'Secret Key'
 
-
 # Application definition
 
 INSTALLED_APPS = [
