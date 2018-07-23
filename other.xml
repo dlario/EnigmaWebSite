@@ -1,0 +1,28 @@
+<application>
+  <component name="PyTestFrameworkService">
+    <option name="SDK_TO_PYTEST">
+      <map>
+        <entry key="C:\Python 3.5\python.exe" value="false" />
+        <entry key="C:\Python34\python.exe" value="false" />
+        <entry key="D:\Dropbox (Personal)\David Lario - Office\Development\Python\Projects\Timetrack\TimeTracker\venv\Scripts\python.exe" value="false" />
+        <entry key="ssh://pi@192.168.1.132:22/usr/bin/python3.5" value="false" />
+      </map>
+    </option>
+    <option name="SDK_TO_NOSETEST">
+      <map>
+        <entry key="C:\Python 3.5\python.exe" value="false" />
+        <entry key="C:\Python34\python.exe" value="false" />
+        <entry key="D:\Dropbox (Personal)\David Lario - Office\Development\Python\Projects\Timetrack\TimeTracker\venv\Scripts\python.exe" value="false" />
+        <entry key="ssh://pi@192.168.1.132:22/usr/bin/python3.5" value="false" />
+      </map>
+    </option>
+    <option name="SDK_TO_TRIALTEST">
+      <map>
+        <entry key="C:\Python 3.5\python.exe" value="false" />
+        <entry key="C:\Python34\python.exe" value="false" />
+        <entry key="D:\Dropbox (Personal)\David Lario - Office\Development\Python\Projects\Timetrack\TimeTracker\venv\Scripts\python.exe" value="false" />
+        <entry key="ssh://pi@192.168.1.132:22/usr/bin/python3.5" value="false" />
+      </map>
+    </option>
+  </component>
+</application>
