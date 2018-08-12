@@ -1,21 +1,23 @@
 {% extends 'base.html' %}
-{% load crispy_forms_tags %}
+{% load django_tables2 crispy_forms_tags %}
 {% load staticfiles %}
-{% block content %}
 
-    <link rel="stylesheet" type="text/css" href="{% static 'form-validation.css' %}" />
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="{% static 'general.css' %}" />
     <title>New Project</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous"></head>
   <body class="bg-light">
       <div class="container">
           <div class="py-5 text-center">
-              <h2>New Project</h2>
-              <p class="lead">Project Details</p>
+              <h2>Equipment Lists</h2>
+              <p class="lead">Inspection Details</p>
               <div class="panel-body">
-                  {% crispy form %}
+                <form action="" method="get">
+                {% crispy filter.form %}
+                </form>
+                  {% render_table table %}
               </div>
           </div>
       </div>
   </body>
 {% endblock %}
-

@@ -1,6 +1,9 @@
 from django.shortcuts import render
 #from .models import Engineering
 
+def home(request):
+    return render(request, 'services/home.html')
+
 def engineering(request):
     return render(request, 'services/engineering.html')
 

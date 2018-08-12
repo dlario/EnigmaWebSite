@@ -1,6 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
+from django.views.generic import FormView
+from accounts.models import Person
+from accounts.forms import PersonForm
+
+class personview(FormView):
+    template_name = 'accounts/userdetails.html'
+    form_class = PersonForm
 
 def signup(request):
     if request.method == 'POST':
@@ -8,9 +15,10 @@ def signup(request):
         if request.POST['password1'] == request.POST['password2']:
             try:
                 user = User.objects.get(username=request.POST['username'])
+
                 return render(request, 'accounts/signup.html', {'error': 'Username has already been taken'})
             except User.DoesNotExist:
-                user = User.objects.create_user(request.POST['username'], password=request.POST['password1'])
+                user = User.objects.create_user(username=request.POST['username'], email=request.POST['email'], password=request.POST['password1'])
                 auth.login(request,user)
                 return redirect('home')
         else:
@@ -25,9 +33,11 @@ def clientdetails(request):
 def login(request):
     if request.method == 'POST':
         user = auth.authenticate(username=request.POST['username'],password=request.POST['password'])
+        print(request.POST['username'], request.POST['password'])
+        print(user)
         if user is not None:
             auth.login(request, user)
-            return redirect('home')
+            return redirect('navhome')
         else:
             return render(request, 'accounts/login.html', {'error': 'username or password is incorrect.'})
     else:
@@ -36,4 +46,4 @@ def login(request):
 def logout(request):
     if request.method == 'POST':
         auth.logout(request)
-        return redirect('home')
+        return redirect('navhome')

@@ -29,6 +29,7 @@ SECRET_KEY = 'Secret Key'
 # Application definition
 
 INSTALLED_APPS = [
+    'equipment.apps.EquipmentConfig',
     'aboutus.apps.AboutusConfig',
     'services.apps.ServicesConfig',
     'inspections.apps.InspectionsConfig',
@@ -39,6 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
+    'django_tables2',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -79,9 +83,9 @@ WSGI_APPLICATION = 'website.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'phoebe',
+        'NAME': 'website',
         'USER': 'dlario',
-        'PASSWORD': 'password',
+        'PASSWORD': 'Mechanical75',
         'HOST': 'localhost',
         'PORT': "3306"
     }
@@ -119,6 +123,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/

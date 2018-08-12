@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-{% load staticfiles %}
-
+    {% load staticfiles %}
     <title>Client Information Sheet</title>
 
     <!-- Bootstrap core CSS -->
@@ -11,49 +11,24 @@
     <!-- Custom styles for this template -->
     <link rel="stylesheet" type="text/css" href="{% static 'form-validation.css' %}" />
 
-
-
   <body class="bg-light">
 
     <div class="container">
       <div class="py-5 text-center">
           <h2>Client Information</h2>
-        <p class="lead">Equipment information </p>
+        <p class="lead">Billing information</p>
       </div>
-
-      <div class="row">
-        <div class="col-md-4 order-md-2 mb-4">
-          <h4 class="d-flex justify-content-between align-items-center mb-3">
-            <span class="text-muted">Your Equipment</span>
-          </h4>
-          <ul class="list-group mb-3">
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 class="my-0">Knuckle Picker</h6>
-                <small class="text-muted">Grande Prairie</small>
-              </div>
-              <span class="text-muted">20</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 class="my-0">Manbasket</h6>
-                <small class="text-muted">Grande Prairie</small>
-              </div>
-              <span class="text-muted">5</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 class="my-0">Spreader Bar</h6>
-                <small class="text-muted">Grande Prairie</small>
-              </div>
-              <span class="text-muted">6</span>
-            </li>
-          </ul>
-        </div>
-        <div class="col-md-8 order-md-1">
-          <h4 class="mb-3">Billing address</h4>
           <form class="needs-validation" novalidate>
-            <div class="row">
+
+                  <div class="mb-3">
+                      <label for="address">Company</label>
+                      <input type="text" class="form-control" id="address" placeholder="Company" required>
+                      <div class="invalid-feedback">
+                          Full Company Legal Name
+                      </div>
+                  </div>
+
+                <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="firstName">First name</label>
                 <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
@@ -117,7 +92,7 @@
                 </div>
               </div>
               <div class="col-md-4 mb-3">
-                <label for="state">State</label>
+                <label for="state">Province</label>
                 <select class="custom-select d-block w-100" id="state" required>
                   <option value="">Choose...</option>
                     <option>Alberta</option>
@@ -126,31 +101,36 @@
                     <option>Northwest Territories</option>
                 </select>
                 <div class="invalid-feedback">
-                  Please provide a valid state.
+                  Please provide a valid province.
                 </div>
               </div>
               <div class="col-md-3 mb-3">
-                <label for="zip">Zip</label>
+                <label for="zip">Postal Code</label>
                 <input type="text" class="form-control" id="zip" placeholder="" required>
                 <div class="invalid-feedback">
-                  Zip code required.
+                  Postal code required.
                 </div>
               </div>
             </div>
             <hr class="mb-4">
             <div class="custom-control custom-checkbox">
               <input type="checkbox" class="custom-control-input" id="same-address">
-              <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
+              <label class="custom-control-label" for="same-address">Billing address is the same as my physical address</label>
             </div>
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="save-info">
-              <label class="custom-control-label" for="save-info">Save this information for next time</label>
-            </div>
-            <hr class="mb-4">
+
+              <div class="col-md-5 mb-3">
+                <label for="po">Purchase Order</label>
+                <select class="custom-select d-block w-100" id="po" required>
+                  <option value="">Choose...</option>
+                  <option>Submit Work Order</option>
+                    <option>Use Unit Number</option>
+                </select>
+                <div class="invalid-feedback">
+                  Please select a PO Strategy
+                </div>
+              </div>
 
           </form>
-        </div>
-      </div>
 
       <footer class="my-5 pt-5 text-muted text-center text-small">
         <p class="mb-1">&copy; Enigma Design Solutions {% now "Y" %}</p>
@@ -165,9 +145,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+
 <script>
       // Example starter JavaScript for disabling form submissions if there are invalid fields
       (function() {

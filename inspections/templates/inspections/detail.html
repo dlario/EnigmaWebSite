@@ -1,5 +1,32 @@
 {% extends 'base.html' %}
 
 {% block content %}
-detail
+
+<div class="row">
+  <div class="col-10">
+    <a href="{{ inspection.project_number }}"><h1>{{ inspection.title }}</h1></a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-4">
+    <a href="javascript:{document.getElementById('upvote').submit()}"><button class="btn btn-primary btn-lg btn-block"><span class="oi oi-caret-top"></span> Book </button></a>
+  </div>
+</div>
+
+<div class="row pt-2">
+  <div class="col-4">
+    <h4><span class="oi oi-magnifying-glass"></span> Hunted by {{ inspection.client }}</h4>
+  </div>
+  <div class="col-4 text-right">
+    <h4><span class="oi oi-clock"></span> {{ inspection.start_date }}</h4>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-8">
+    <p>{{ inspection.body }}</p>
+  </div>
+</div>
+
 {% endblock %}
