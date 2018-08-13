@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
-
+{% load crispy_forms_tags %}
+{% load staticfiles %}
 {% block content %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'form-validation.css' %}" />
 
 <div class="row">
   <div class="col-10">

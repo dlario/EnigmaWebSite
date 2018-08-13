@@ -101,13 +101,11 @@ class PagedFilteredTableView(SingleTableView):
         context[self.context_filter_name] = self.filter
         return context
 
-
-def home(request):
-    return render (request, 'inspections/home.html')
-
 def index(request):
     return render (request, 'inspections/index.html')
 
+def projectlist(request):
+    return render (request, 'inspections/projectlist.html')
 
 def create(request):
     if request.method == 'POST':
@@ -141,8 +139,8 @@ def create(request):
 
 
 def inspections(request):
-    return render (request, 'inspections/inspections.html')
-
+    inspections = Inspection.objects
+    return render(request, 'inspections/inspections.html',{'inspections':inspections})
 
 def detail(request, inspection_id):
     inspection = get_object_or_404(Inspection, pk=inspection_id)
