@@ -1,21 +1,21 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
-
+{% load staticfiles %}
 {% block content %}
-    <!doctype html>
-        {% load staticfiles %}
-        <body class="bg-light">
-        <title>Client Information Sheet</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous"></head>
-        <link rel="stylesheet" type="text/css" href="{% static 'form-validation.css' %}" />
-        <div class="container">
-            <div class="py-5 text-center">
-                <h2>Client Information</h2>
+    <body class="bg-light">
 
-                <div class="custom-control custom-checkbox" align="left">
+    <title>Client Information Sheet</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous"></head>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'form-validation.css' %}" />
+    <div class="container">
+        <div class="py-5 text-center">
+            <h2>Client Information</h2>
+            <div class="custom-control custom-checkbox" align="left">
                     <input type="checkbox" class="custom-control-input align-left" id="same-address">
                     <label class="custom-control-label" for="same-address">Billing address is the same as my physical address</label>
-                </div>
+            </div>
 
                 <div class="col-md-5 mb-3">
                     <label for="po">Purchase Order</label>
@@ -37,6 +37,7 @@
                         <a class="nav-link" id="pills-billing-tab" data-toggle="pill" href="#pills-billing" role="tab" aria-controls="pills-billing" aria-selected="false">Billing Address</a>
                     </li>
                 </ul>
+
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-physical" role="tabpanel" aria-labelledby="pills-physical-tab">
                         <form class="needs-validation" novalidate align="left">
@@ -259,8 +260,8 @@
         <!-- Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
+{% endblock %}
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
-
-{% endblock %}
