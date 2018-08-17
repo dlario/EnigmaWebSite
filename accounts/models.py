@@ -1,6 +1,7 @@
 from django.db import models
 
 class Person(models.Model):
+    server_bt_id = models.IntegerField()
     first_name = models.CharField(max_length=255, default="")
     middle_name = models.CharField(max_length=255, default="")
     last_name = models.CharField(max_length=255, default="")
@@ -17,6 +18,7 @@ class ContactInformation(models.Model):
 
 # Create your models here.
 class Company(models.Model):
+    server_bt_id = models.IntegerField()
     company_name = models.CharField(max_length=255, default="")
     city = models.CharField(max_length=255, default="Grande Prairie")
     province = models.CharField(max_length=255, default="Alberta")

@@ -4,6 +4,7 @@ from django.db import models
 
 
 class Equipment(models.Model):
+    server_bt_id = models.IntegerField(default=None, blank=True, null=True)
     equipment_category = models.CharField(max_length=255, default="")
     equipment_subcategory = models.CharField(max_length=255, default="")
     manufacturer = models.CharField(max_length=255, default="")

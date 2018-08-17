@@ -5,6 +5,7 @@ from accounts.models import Company
 from accounts.models import Person
 
 class Inspection(models.Model):
+    server_bt_id = models.IntegerField(default=None, blank=True, null=True)
     department = models.CharField(max_length=255, default="Inspection", choices = [('Inspection', 'Inspection'), ('Engineering', 'Engineering')])
     project_type = models.CharField(max_length=255, default="Inspection", choices = [('Equipment Inspection', 'Equipment Inspection'), ('Engineering Design', 'Engineering Design')])
     province = models.CharField(max_length=255, default="Alberta", choices = [('Alberta', 'Alberta'), ('British Columbia', 'British Columbia'), ('Manitoba', 'Manitoba')])
@@ -29,12 +30,36 @@ class Inspection(models.Model):
       verbose_name_plural = 'Inspections'
       ordering = ['-id']
 
+
 class InspectionImage(models.Model):
     inspection_image = models.ForeignKey(Inspection,related_name="image", on_delete=models.CASCADE)
     description =  models.CharField(max_length=255)
     image = models.ImageField(upload_to='images/')
 
+
 class InspectionDocument(models.Model):
     inspection_document = models.ForeignKey(Inspection, related_name="document", on_delete=models.CASCADE)
     description = models.CharField(max_length=255)
     image = models.FileField(upload_to='images/')
+
+
+class DocumentPermissions(models.Model):
+    server_bt_id = models.IntegerField(default=None, blank=True, null=True)
+    document = models.ForeignKey(InspectionDocument, on_delete=models.CASCADE)
+    doc_request_company = models.ForeignKey(Company,related_name="doc_request_company", on_delete=models.CASCADE)
+    doc_request_person = models.ForeignKey(Person,related_name="doc_request_person", on_delete=models.CASCADE)
+    doc_authority_company = models.ForeignKey(Company,related_name="doc_authority_company", on_delete=models.CASCADE)
+    doc_authority_person = models.ForeignKey(Person,related_name="doc_authority_person", on_delete=models.CASCADE)
+    default_status = models.IntegerField()
+    status = models.IntegerField()
+
+
+class InspectionPermissions(models.Model):
+    server_bt_id = models.IntegerField(default=None, blank=True, null=True)
+    project = models.ForeignKey(Inspection, on_delete=models.CASCADE)
+    proj_request_company = models.ForeignKey(Company,related_name="proj_request_company", on_delete=models.CASCADE)
+    proj_request_person = models.ForeignKey(Person,related_name="proj_request_person", on_delete=models.CASCADE)
+    proj_authority_company = models.ForeignKey(Company,related_name="proj_authority_company", on_delete=models.CASCADE)
+    proj_authority_person = models.ForeignKey(Person,related_name="proj_authority_person", on_delete=models.CASCADE)
+    default_status = models.IntegerField()
+    status = models.IntegerField()

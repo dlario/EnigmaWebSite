@@ -11,6 +11,11 @@ from django_tables2 import RequestConfig, SingleTableView, Table, LinkColumn, Co
 from django_tables2.utils import A
 from django.utils.html import format_html
 
+from sqlalchemy import update, Table, Column, DateTime, Integer, String, Text, Date, Boolean, Numeric, MetaData, ForeignKey, create_engine, exists
+from sqlalchemy.orm import aliased, Query, joinedload, lazyload, subqueryload, join, outerjoin, sessionmaker
+from sqlalchemy.orm import sessionmaker, relationship
+from sqlalchemy.ext.declarative import declarative_base
+
 from inspections.forms import Project, CreditCardForm, CartForm, Address
 #def home(request):
 #    inspection = Inspection.objects
@@ -144,8 +149,11 @@ def inspections(request):
 
 def detail(request, inspection_id):
     inspection = get_object_or_404(Inspection, pk=inspection_id)
-    return render(request, 'inspections/detail.html', {'inspection':inspection})
-
+    request.user == "dlario"
+    if True:
+        return render(request, 'inspections/detail.html', {'inspection':inspection})
+    else:
+        return render(request, 'inspections/inspections.html')
 
 @login_required(login_url="/accounts/signup")
 def bookinspection(request, equipment_id):
