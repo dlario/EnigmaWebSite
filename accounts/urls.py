@@ -8,6 +8,4 @@ urlpatterns = [
     path('clientdetails', views.clientdetails, name='clientdetails'),
     path('userdetails', views.personview.as_view(), name='userdetails'),
     path('clienthome', views.clienthome, name='clienthome'),
-
-
 ]
