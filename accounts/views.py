@@ -6,9 +6,11 @@ from inspections.models import Inspection
 from accounts.models import Person
 from accounts.forms import PersonForm
 
+
 class personview(FormView):
     template_name = 'accounts/userdetails.html'
     form_class = PersonForm
+
 
 def signup(request):
     if request.method == 'POST':
@@ -19,8 +21,9 @@ def signup(request):
 
                 return render(request, 'accounts/signup.html', {'error': 'Username has already been taken'})
             except User.DoesNotExist:
-                user = User.objects.create_user(username=request.POST['username'], email=request.POST['email'], password=request.POST['password1'])
-                auth.login(request,user)
+                user = User.objects.create_user(username=request.POST['username'], email=request.POST['email'],
+                                                password=request.POST['password1'])
+                auth.login(request, user)
                 return redirect('home')
         else:
             return render(request, 'accounts/signup.html', {'error': 'Passwords must match'})
@@ -28,16 +31,19 @@ def signup(request):
         # User wants to enter info
         return render(request, 'accounts/signup.html')
 
+
 def clientdetails(request):
     return render(request, 'accounts/clientdetails.html')
 
+
 def clienthome(request):
     inspections = Inspection.objects
-    return render(request, 'accounts/clienthome.html',{'inspections':inspections})
+    return render(request, 'accounts/clienthome.html', {'inspections': inspections})
+
 
 def login(request):
     if request.method == 'POST':
-        user = auth.authenticate(username=request.POST['username'],password=request.POST['password'])
+        user = auth.authenticate(username=request.POST['username'], password=request.POST['password'])
         print(request.POST['username'], request.POST['password'])
         print(user)
         if user is not None:
@@ -47,6 +53,7 @@ def login(request):
             return render(request, 'accounts/login.html', {'error': 'username or password is incorrect.'})
     else:
         return render(request, 'accounts/login.html')
+
 
 def logout(request):
     if request.method == 'POST':

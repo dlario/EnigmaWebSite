@@ -27,10 +27,18 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
           <ul class="navbar-nav mr-auto">
               <li class="nav-item active">
+                  {% if user.is_authenticated %}
+                  <a class="nav-link" href="/accounts/clienthome">Home
+                      <span class="sr-only">(current)
+                      </span>
+                  </a>
+                  {% else %}
                   <a class="nav-link" href="{% url 'navhome' %}">Home
                       <span class="sr-only">(current)
                       </span>
                   </a>
+                  {% endif %}
+
               </li>
               <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Us</a>

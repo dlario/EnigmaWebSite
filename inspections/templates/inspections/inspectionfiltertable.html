@@ -3,21 +3,23 @@
 {% load staticfiles %}
 
 {% block content %}
-    <link rel="stylesheet" type="text/css" href="{% static 'general.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'general.css' %}"/>
     <title>New Project</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous"></head>
-  <body class="bg-light">
-      <div class="container">
-          <div class="py-5 text-center">
-              <h2>Equipment Lists</h2>
-              <p class="lead">Inspection Details</p>
-              <div class="panel-body">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
+          integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    </head>
+    <body class="bg-light">
+    <div class="container">
+        <div class="py-5 text-center">
+            <h2>Equipment Lists</h2>
+            <p class="lead">Inspection Details</p>
+            <div class="panel-body">
                 <form action="" method="get">
-                {% crispy filter.form %}
+                    {% crispy filter.form %}
                 </form>
-                  {% render_table table %}
-              </div>
-          </div>
-      </div>
-  </body>
+                {% render_table table %}
+            </div>
+        </div>
+    </div>
+    </body>
 {% endblock %}

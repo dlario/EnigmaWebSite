@@ -1,23 +1,26 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% load staticfiles %}
+    {% load staticfiles %}
 
- <title>The Team</title>
-        <!-- Bootstrap core CSS -->
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous"></head>
+    <title>The Team</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
+          integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    </head>
 
     <!-- Custom styles for this template -->
-    <link rel="stylesheet" type="text/css" href="{% static 'team.css' %}" />
-     <div class="container marketing">
+    <link rel="stylesheet" type="text/css" href="{% static 'team.css' %}"/>
+    <div class="container marketing">
 
         <!-- Three columns of text below the carousel -->
         <div class="row">
-          <div class="col-lg-4">
-            <img class="rounded-circle" img src="{% static '/Images/Company/DavidLario.jpg' %}" alt="Generic placeholder image" width="140">
-            <h2>David Lario</h2>
-            <p>David has 11 years experince in the NDT Field.</p>
-          </div><!-- /.col-lg-4 -->
+            <div class="col-lg-4">
+                <img class="rounded-circle" img src="{% static '/Images/Company/DavidLario.jpg' %}"
+                     alt="Generic placeholder image" width="140">
+                <h2>David Lario</h2>
+                <p>David has 11 years experince in the NDT Field.</p>
+            </div><!-- /.col-lg-4 -->
         </div><!-- /.row -->
 
 
@@ -26,56 +29,65 @@
         <hr class="featurette-divider">
 
         <div class="row featurette">
-          <div class="col-md-7">
-              <h2 class="featurette-heading">University of Alberta</h2>
-            <p class="lead">B.Sc. Mechanical Engineering 1999</p>
+            <div class="col-md-7">
+                <h2 class="featurette-heading">University of Alberta</h2>
+                <p class="lead">B.Sc. Mechanical Engineering 1999</p>
                 <p class="lead">M.Sc. Mechanical Engineering 2005</p>
-          </div>
-          <div class="col-md-5">
-            <img class="featurette-image img-fluid mx-auto" img src="{% static '/Images/Associations/Engineering University of Alberta.jpg' %}" alt="Generic placeholder image">
-          </div>
+            </div>
+            <div class="col-md-5">
+                <img class="featurette-image img-fluid mx-auto" img
+                     src="{% static '/Images/Associations/Engineering University of Alberta.jpg' %}"
+                     alt="Generic placeholder image">
+            </div>
         </div>
 
         <hr class="featurette-divider">
 
         <div class="row featurette">
-          <div class="col-md-7 order-md-2">
-            <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
-            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-          </div>
-          <div class="col-md-5 order-md-1">
-            <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-          </div>
+            <div class="col-md-7 order-md-2">
+                <h2 class="featurette-heading">Oh yeah, it's that good. <span
+                        class="text-muted">See for yourself.</span></h2>
+                <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis
+                    euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus,
+                    tellus ac cursus commodo.</p>
+            </div>
+            <div class="col-md-5 order-md-1">
+                <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto"
+                     alt="Generic placeholder image">
+            </div>
         </div>
 
         <hr class="featurette-divider">
 
         <div class="row featurette">
-          <div class="col-md-7">
-            <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
-            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-          </div>
-          <div class="col-md-5">
-            <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-          </div>
+            <div class="col-md-7">
+                <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
+                <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis
+                    euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus,
+                    tellus ac cursus commodo.</p>
+            </div>
+            <div class="col-md-5">
+                <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto"
+                     alt="Generic placeholder image">
+            </div>
         </div>
 
         <hr class="featurette-divider">
 
         <!-- /END THE FEATURETTES -->
 
-      </div><!-- /.container -->
+    </div><!-- /.container -->
 
 
-      <!-- FOOTER -->
-      <footer class="my-5 pt-5 text-muted text-center text-small">
+    <!-- FOOTER -->
+    <footer class="my-5 pt-5 text-muted text-center text-small">
         <p class="mb-1">&copy; Enigma Design Solutions {% now "Y" %}</p>
         <ul class="list-inline">
-          <li class="list-inline-item"><a href="#">Privacy</a></li>
-          <li class="list-inline-item"><a href="#">Terms</a></li>
-          <li class="list-inline-item"><a href="#">Support</a></li>
+            <li class="list-inline-item"><a href="#">Privacy</a></li>
+            <li class="list-inline-item"><a href="#">Terms</a></li>
+            <li class="list-inline-item"><a href="#">Support</a></li>
         </ul>
-      </footer>
+    </footer>
     </main>
 
 {% endblock %}
