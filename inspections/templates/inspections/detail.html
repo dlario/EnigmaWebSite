@@ -3,33 +3,205 @@
 {% load staticfiles %}
 {% block content %}
 
-    <link rel="stylesheet" type="text/css" href="{% static 'form-validation.css' %}" />
+<br>
+ <br>
+ <br>
+ <br>
+    <!DOCTYPE html>
+    <html lang="en">
 
-<div class="row">
-  <div class="col-10">
-    <a href="{{ inspection.project_number }}"><h1>{{ inspection.title }}</h1></a>
-  </div>
-</div>
+      <head>
 
-<div class="row">
-  <div class="col-4">
-    <a href="javascript:{document.getElementById('book').submit()}"><button class="btn btn-primary btn-lg btn-block"><span class="oi oi-caret-top"></span> Book </button></a>
-  </div>
-</div>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
 
-<div class="row pt-2">
-  <div class="col-4">
-    <h4><span class="oi oi-magnifying-glass"></span> Hunted by {{ inspection.client }}</h4>
-  </div>
-  <div class="col-4 text-right">
-    <h4><span class="oi oi-clock"></span> {{ inspection.start_date }}</h4>
-  </div>
-</div>
+          <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous"></head>
 
-<div class="row">
-  <div class="col-8">
-    <p>{{ inspection.body }}</p>
-  </div>
-</div>
+        <!-- Custom styles for this template -->
+        <link rel="stylesheet" type="text/css" href="{% static 'blog-home.css' %}" />
 
+
+        <!-- Bootstrap core CSS -->
+        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+
+      </head>
+
+      <body>
+
+        <!-- Page Content -->
+        <div class="container">
+
+          <div class="row">
+
+            <!-- Blog Entries Column -->
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-10">
+                        <a href="{{ inspection.project_number }}"><h1>{{ inspection.title }}</h1></a>
+                    </div>
+                </div>
+                <div class="col-4 text-left">
+                <h5><span class="oi oi-clock"></span> {{ inspection.start_date }}</h5>
+              </div>
+              <!-- Blog Post -->
+              <div class="card mb-4">
+                  <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-timeline" role="tabpanel" aria-labelledby="pills-timeline-tab">
+                        <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
+                    </div>
+
+                  </div>
+
+                  <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="pills-timeline-tab" data-toggle="pill" href="#pills-timeline" role="tab" aria-controls="pills-timeline" aria-selected="true">Timeline</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-billing-tab" data-toggle="pill" href="#pills-billing" role="tab" aria-controls="pills-billing" aria-selected="false">Billing</a>
+                    </li>
+                </ul>
+              </div>
+                  <div class="card text-white bg-secondary my-2 text-center">
+                      <div class="card-body">
+                          <p class="text-white m-0">Project Activity</p>
+                      </div>
+                  </div>
+
+
+            </div>
+
+            <!-- Sidebar Widgets Column -->
+            <div class="col-md-4">
+
+
+
+                <div class="card my-4">
+                <h5 class="card-header">Team</h5>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <ul class="list-unstyled mb-0">
+                        <li>
+                          <a href="">Lead: David Lario</a>
+                        </li>
+                        <li>
+                          <a href="">Client: North West Crane</a>
+                        </li>
+                        <li>
+                          <a href="">Owner: Trident</a>
+                        </li>
+                          <li>
+                          <a href="">Fabricator: Kaymor Machine and Welding</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                    <button class="btn btn-sm btn-primary btn-block" type="submit">Add Member</button>
+              </div>
+
+              <!-- Categories Widget -->
+              <div class="card my-4">
+                <h5 class="card-header">Milestones</h5>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <ul class="list-unstyled mb-0">
+                        <li>
+                          <a href="">Project Initiation - Completed</a>
+                        </li>
+                        <li>
+                          <a href="">Preliminary Design - Completed</a>
+                        </li>
+                        <li>
+                          <a href="">Calculations - Completed</a>
+                        </li>
+                          <li>
+                          <a href="">Drawings - August 30, 2018</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                  <button class="btn btn-sm btn-primary btn-block" type="submit">Add Milestone</button>
+              </div>
+
+              <!-- Side Widget -->
+              <div class="card my-4">
+                <h5 class="card-header">Documents</h5>
+                <div class="card-body">
+                    <div class="row">
+                    <div class="col-lg-12">
+                      <ul class="list-unstyled mb-0">
+                        <li>
+                          <a href="">Estimate - FINAL</a>
+                        </li>
+                        <li>
+                          <a href="">Contract - FINAL</a>
+                        </li>
+                        <li>
+                          <a href="">Report - UNDER REVIEW</a>
+                        </li>
+                          <li>
+                          <a href="">Drawings - PRELIMINARY</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                  <button class="btn btn-sm btn-primary btn-block" type="submit">Add Document</button>
+              </div>
+
+
+                         <!-- Side Widget -->
+              <div class="card my-4">
+                <h5 class="card-header">Tasks</h5>
+                <div class="card-body">
+                    <div class="row">
+                    <div class="col-lg-12">
+                      <ul class="list-unstyled mb-0">
+                        <li>
+                          <a href="">Drawings - Arsenal</a>
+                        </li>
+                        <li>
+                          <a href="">Repairs - Kaymor</a>
+                        </li>
+                        <li>
+                          <a href="">Mechanical - NWC</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                  <button class="btn btn-sm btn-primary btn-block" type="submit">Add Task</button>
+              </div>
+
+
+            </div>
+
+          </div>
+          <!-- /.row -->
+
+        </div>
+        <!-- /.container -->
+
+    <!-- Footer -->
+        <footer class="my-5 pt-5 text-muted text-center text-small">
+            <p class="mb-1">&copy; Enigma Design Solutions {% now "Y" %}</p>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="#">Privacy</a></li>
+                <li class="list-inline-item"><a href="#">Terms</a></li>
+                <li class="list-inline-item"><a href="#">Support</a></li>
+            </ul>
+        </footer>
+
+      </body>
+
+    </html>
 {% endblock %}
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>

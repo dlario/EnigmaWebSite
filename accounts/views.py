@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
 from django.views.generic import FormView
+from inspections.models import Inspection
 from accounts.models import Person
 from accounts.forms import PersonForm
 
@@ -30,6 +31,10 @@ def signup(request):
 def clientdetails(request):
     return render(request, 'accounts/clientdetails.html')
 
+def clienthome(request):
+    inspections = Inspection.objects
+    return render(request, 'accounts/clienthome.html',{'inspections':inspections})
+
 def login(request):
     if request.method == 'POST':
         user = auth.authenticate(username=request.POST['username'],password=request.POST['password'])
@@ -37,7 +42,7 @@ def login(request):
         print(user)
         if user is not None:
             auth.login(request, user)
-            return redirect('navhome')
+            return redirect('clienthome')
         else:
             return render(request, 'accounts/login.html', {'error': 'username or password is incorrect.'})
     else:
