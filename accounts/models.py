@@ -36,6 +36,7 @@ class CompanyPerson(models.Model):
     role = models.CharField(max_length=255)
     image = models.ImageField(upload_to='images/')
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    companyadmin = models.BooleanField()
 
     def __str__(self):
         return self.person.__str__() + ": " + self.role

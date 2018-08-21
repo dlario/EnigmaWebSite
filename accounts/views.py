@@ -33,17 +33,7 @@ def signup(request):
 
 def clientdetails(request):
     if request.method == 'POST':
-        print(request.POST.get('companyname'))
-        print(request.POST.get('firstname'))
-        print(request.POST.get('lastname'))
-        print(request.POST.get('username'))
-        print(request.POST.get('email'))
-        print(request.POST.get('country'))
-        print(request.POST.get('province'))
-        print(request.POST.get('address'))
-        print(request.POST.get('address2'))
-        print(request.POST.get('postalcode'))
-        print(request.POST.get('bcompanyname'))
+        '''print(request.POST.get('bcompanyname'))
         print(request.POST.get('bfirstname'))
         print(request.POST.get('blastname'))
         print(request.POST.get('busername'))
@@ -52,11 +42,30 @@ def clientdetails(request):
         print(request.POST.get('baddress2'))
         print(request.POST.get('bcountry'))
         print(request.POST.get('bprovince'))
-        print(request.POST.get('bpostalcode'))
+        print(request.POST.get('bpostalcode'))'''
 
+        #TODO: Create a database recording changes in tranactions. Have the server know which ones were updated
         PersonAccount = Person.objects.filter(user=request.user).first()
+        PersonAccount.first_name = request.POST.get('firstname')
+        PersonAccount.last_name = request.POST.get('lastname')
+        PersonAccount.save()
+
+        user = User.objects.get(username=request.POST['username'])
+        user.first_name = request.POST.get('firstname')
+        user.last_name = request.POST.get('lastname')
+        user.email = request.POST.get('email')
+        user.save()
+
         CompanyAccountPerson = CompanyPerson.objects.filter(person=PersonAccount).first()
         CompanyAccount = Company.objects.filter(id=CompanyAccountPerson.company.id).first()
+
+        CompanyAccount.company_name = request.POST.get('companyname')
+        #CompanyAccount.city = request.POST.get('firstname')
+        CompanyAccount.province = request.POST.get('province')
+        CompanyAccount.address = request.POST.get('address')
+        CompanyAccount.box_number = request.POST.get('firstname')
+        CompanyAccount.postal_code = request.POST.get('postalcode')
+
         CompanyInspection = Inspection.objects.all()  # filter(company=CompanyAccount)
 
         return render(request, 'accounts/clienthome.html',
