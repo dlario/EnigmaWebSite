@@ -32,8 +32,70 @@ def signup(request):
 
 
 def clientdetails(request):
-    return render(request, 'accounts/clientdetails.html')
+    if request.method == 'POST':
+        print(request.POST.get('companyname'))
+        print(request.POST.get('firstname'))
+        print(request.POST.get('lastname'))
+        print(request.POST.get('username'))
+        print(request.POST.get('email'))
+        print(request.POST.get('country'))
+        print(request.POST.get('province'))
+        print(request.POST.get('address'))
+        print(request.POST.get('address2'))
+        print(request.POST.get('postalcode'))
+        print(request.POST.get('bcompanyname'))
+        print(request.POST.get('bfirstname'))
+        print(request.POST.get('blastname'))
+        print(request.POST.get('busername'))
+        print(request.POST.get('bemail'))
+        print(request.POST.get('baddress'))
+        print(request.POST.get('baddress2'))
+        print(request.POST.get('bcountry'))
+        print(request.POST.get('bprovince'))
+        print(request.POST.get('bpostalcode'))
 
+        PersonAccount = Person.objects.filter(user=request.user).first()
+        CompanyAccountPerson = CompanyPerson.objects.filter(person=PersonAccount).first()
+        CompanyAccount = Company.objects.filter(id=CompanyAccountPerson.company.id).first()
+        CompanyInspection = Inspection.objects.all()  # filter(company=CompanyAccount)
+
+        return render(request, 'accounts/clienthome.html',
+                      {'inspections': CompanyInspection, 'company': CompanyAccount, 'person': PersonAccount})
+    else:
+        UserDate = request.user
+        PersonAccount = Person.objects.filter(user=request.user).first()
+        CompanyAccountPerson = CompanyPerson.objects.filter(person=PersonAccount).first()
+        CompanyAccount = Company.objects.filter(id=CompanyAccountPerson.company.id).first()
+        return render(request, 'accounts/clientdetails.html', {'company': CompanyAccount, 'person': PersonAccount})
+
+def savedetails(request):
+    if request.method == 'POST':
+        print(request.POST['companyname'])
+        print(request.POST['firstName'])
+        print(request.POST['lastName'])
+        print(request.POST['username'])
+        print(request.POST['email'])
+        print(request.POST['address'])
+        print(request.POST['address2'])
+        print(request.POST['postalcode'])
+        print(request.POST['bcompanyname'])
+        print(request.POST['bfirstName'])
+        print(request.POST['blastName'])
+        print(request.POST[' busername'])
+        print(request.POST['bemail'])
+        print(request.POST['baddress'])
+        print(request.POST['baddress2'])
+        print(request.POST['bcountry'])
+        print(request.POST['bprovince'])
+        print(request.POST['bpostalcode'])
+
+        PersonAccount = Person.objects.filter(user=request.user).first()
+        CompanyAccountPerson = CompanyPerson.objects.filter(person=PersonAccount).first()
+        CompanyAccount = Company.objects.filter(id=CompanyAccountPerson.company.id).first()
+        CompanyInspection = Inspection.objects.all()  # filter(company=CompanyAccount)
+
+        return render(request, 'accounts/clienthome.html',
+                      {'inspections': CompanyInspection, 'company': CompanyAccount, 'person': PersonAccount})
 
 def clienthome(request):
 
