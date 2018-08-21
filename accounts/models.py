@@ -1,7 +1,9 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Person(models.Model):
     server_bt_id = models.IntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=255, default="")
     middle_name = models.CharField(max_length=255, default="")
     last_name = models.CharField(max_length=255, default="")
@@ -31,7 +33,7 @@ class Company(models.Model):
 
 class CompanyPerson(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
-    role =  models.CharField(max_length=255)
+    role = models.CharField(max_length=255)
     image = models.ImageField(upload_to='images/')
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
 

@@ -3,9 +3,8 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from django.views.generic import FormView
 from inspections.models import Inspection
-from accounts.models import Person
+from accounts.models import Person, CompanyPerson, Company, ContactInformation
 from accounts.forms import PersonForm
-
 
 class personview(FormView):
     template_name = 'accounts/userdetails.html'
@@ -37,8 +36,13 @@ def clientdetails(request):
 
 
 def clienthome(request):
-    inspections = Inspection.objects
-    return render(request, 'accounts/clienthome.html', {'inspections': inspections})
+
+    PersonAccount = Person.objects.filter(user=request.user).first()
+    CompanyAccountPerson = CompanyPerson.objects.filter(person=PersonAccount).first()
+    CompanyAccount = Company.objects.filter(id=CompanyAccountPerson.company.id).first()
+    CompanyInspection = Inspection.objects.all()#filter(company=CompanyAccount)
+
+    return render(request, 'accounts/clienthome.html', {'inspections': CompanyInspection, 'company': CompanyAccount, 'person': PersonAccount})
 
 
 def login(request):
