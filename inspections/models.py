@@ -4,6 +4,7 @@ from equipment.models import Equipment
 from accounts.models import Company
 from accounts.models import Person
 
+
 class Inspection(models.Model):
     server_bt_id = models.IntegerField(default=None, blank=True, null=True)
     department = models.CharField(max_length=255, default="Inspection", choices = [('Inspection', 'Inspection'), ('Engineering', 'Engineering')])
@@ -31,16 +32,86 @@ class Inspection(models.Model):
       ordering = ['-id']
 
 
+class lstRoles(models.Model):
+    role = models.CharField(max_length=255)
+
+
+class lstPhase(models.Model):
+    Phase = models.CharField(max_length=255)
+
+
+class lstDocumentTypes(models.Model):
+    DocumentType = models.CharField(max_length=255)
+
+
 class InspectionImage(models.Model):
     inspection_image = models.ForeignKey(Inspection,related_name="image", on_delete=models.CASCADE)
     description =  models.CharField(max_length=255)
     image = models.ImageField(upload_to='images/')
 
 
+class lsttaskcategory(models.Model):
+    Name_id = models.IntegerField()
+    Name = models.IntegerField()
+    NameText = models.CharField(max_length=255)
+    Abbr = models.CharField(max_length=255)
+
+
+class lsttaskrelation(models.Model):
+    Server_id = models.IntegerField()
+    Name = models.IntegerField()
+    NameText = models.CharField(max_length=255)
+
+
+class lsttaskdescription(models.Model):
+    Server_id = models.IntegerField()
+    Name = models.IntegerField()
+    NameText = models.CharField(max_length=255)
+    Abbr = models.CharField(max_length=255)
+
+
+class lsttaskdetail(models.Model):
+    Server_id = models.IntegerField()
+    Name = models.IntegerField()
+    NameText = models.CharField(max_length=255)
+    Abbr = models.CharField(max_length=255)
+
+
+class lstunittype(models.Model):
+    Server_id = models.IntegerField()
+    Name = models.IntegerField()
+    NameText = models.CharField(max_length=255)
+
+
+class lstunit(models.Model):
+    Server_id = models.IntegerField()
+    Name = models.IntegerField()
+    Type_id = models.ForeignKey(lstunittype,related_name="unittype", on_delete=models.CASCADE)
+    NameText = models.CharField(max_length=255)
+
+
+class ProjectTasks(models.Model):
+    Server_id = models.IntegerField()
+    ParentTask = models.IntegerField()
+    Title =  models.CharField(max_length=255)
+    Level = models.IntegerField()
+    Phase = models.ForeignKey(lstPhase,related_name="phase", on_delete=models.CASCADE)
+    Category = models.ForeignKey(lsttaskcategory,related_name="category", on_delete=models.CASCADE)
+    Description = models.ForeignKey(lsttaskdescription,related_name="description", on_delete=models.CASCADE)
+    Detail = models.ForeignKey(lsttaskdetail,related_name="detail", on_delete=models.CASCADE)
+    Resource = models.ForeignKey(Person,related_name="Resource", on_delete=models.CASCADE)
+    Rate = models.DecimalField(max_digits=4, decimal_places=2)
+    RateUnits = models.ForeignKey(lstunit,related_name="rateunits", on_delete=models.CASCADE)
+    EstHours = models.DecimalField(max_digits=4, decimal_places=2)
+    ActHours = models.DecimalField(max_digits=4,decimal_places=2)
+    Comments = models.CharField(max_length=255)
+
+
 class InspectionDocument(models.Model):
     inspection_document = models.ForeignKey(Inspection, related_name="document", on_delete=models.CASCADE)
+    documenttype = models.ForeignKey(lstDocumentTypes,related_name="documenttype", on_delete=models.CASCADE)
     description = models.CharField(max_length=255)
-    image = models.FileField(upload_to='images/')
+    document = models.FileField(upload_to='images/')
 
 
 class DocumentPermissions(models.Model):

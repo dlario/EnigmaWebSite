@@ -14,3 +14,21 @@ class Equipment(models.Model):
 
     def __str__(self):
         return self.manufacturer + " - " + self.model_number + " - " + self.serial_number
+
+
+class lstequipmenttype(models.Model):
+    Server_id = models.IntegerField()
+    Name = models.IntegerField()
+    NameText = models.CharField(max_length=255)
+
+
+class lstequipmentitem(models.Model):
+    Server_id = models.IntegerField()
+    Name = models.IntegerField()
+    NameText = models.CharField(max_length=255)
+
+
+class lstequipmentinspectiontype(models.Model):
+    Server_id = models.IntegerField()
+    Name = models.IntegerField()
+    NameText = models.CharField(max_length=255)

@@ -1,4 +1,28 @@
 /* Move down content because we have a fixed navbar that is 3.5rem tall */
 body {
-  padding-top: 10rem;
+    padding-top: 10rem;
+}
+
+ul.actions li:last-of-type {
+    float: right;
+}
+
+#HASH {
+  width: 100%;
+}
+
+#HASH div {
+  width: 49%;
+  display: inline-block;
+}
+
+#right {
+  text-align: right;
+}
+
+.alignleft {
+	float: left;
+}
+.alignright {
+	float: right;
 }

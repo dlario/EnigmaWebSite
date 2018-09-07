@@ -5,6 +5,7 @@ from crispy_forms.layout import Submit, Layout, Field, Div, Fieldset, HTML
 from crispy_forms.bootstrap import (
     PrependedText, AppendedText, PrependedAppendedText, FormActions)
 from accounts.models import Person
+from .models import *
 
 class PersonForm(forms.ModelForm):
     # department = forms.ModelChoiceField(queryset=department.objects.all())

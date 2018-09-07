@@ -25,6 +25,11 @@ class MainView(FormView):
     template_name = 'inspections/create.html'
     form_class = Project
 
+class BookView(FormView):
+    template_name = 'inspections/bookinspection.html'
+    form_class = Project
+
+
 class InspectionTable(Table):
     def render_name(self, value, record):
         #url = record.get_absolute_url()
@@ -149,11 +154,11 @@ def inspections(request):
 
 def detail(request, inspection_id):
     inspection = get_object_or_404(Inspection, pk=inspection_id)
-    request.user == "dlario"
     if True:
         return render(request, 'inspections/detail.html', {'inspection':inspection})
     else:
         return render(request, 'inspections/inspections.html')
+
 
 @login_required(login_url="/accounts/signup")
 def bookinspection(request, equipment_id):

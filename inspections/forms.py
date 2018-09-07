@@ -58,6 +58,44 @@ class Project(forms.ModelForm):
                     Submit('cancel', 'Cancel'),
     )
 
+class BookInspection(forms.ModelForm):
+    # department = forms.ModelChoiceField(queryset=department.objects.all())
+    class Meta:
+        model = Inspection
+        fields =['project_type',
+                 'client',
+                 'owner',
+                 'client_contact',
+                 'start_date',
+                 'end_date',
+                 'purchase_order',
+                 'equipment']
+
+    def __init__(self, *args, **kwargs):
+        super(Project, self).__init__(*args, **kwargs)
+
+    # Uni-form
+    helper = FormHelper()
+    helper.form_method = 'POST'
+    #helper.form_id = 'id-project'
+    #action = "{% url 'home' %}"
+    helper.form_action = 'create'
+    #helper.form_class = 'form-horizontal'
+    helper.layout = Layout(
+        Div(
+            Div('project_type', css_class='col-md-6'), css_class='row'),
+        Div( css_class='row'),\
+                    'client',\
+                    'owner',\
+                    'client_contact',\
+                    'start_date',\
+                    'purchase_order',\
+                    'equipment',\
+                    Submit('submit', 'Create Project', css_class="btn-primary"),\
+                    Submit('cancel', 'Cancel'),
+    )
+
+
 class InspectionForm(forms.Form):
     item = forms.CharField()
     quantity = forms.IntegerField(label="Qty")

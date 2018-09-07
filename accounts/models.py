@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from filer.fields.image import FilerImageField
 
 class Person(models.Model):
     server_bt_id = models.IntegerField()
@@ -7,7 +8,8 @@ class Person(models.Model):
     first_name = models.CharField(max_length=255, default="")
     middle_name = models.CharField(max_length=255, default="")
     last_name = models.CharField(max_length=255, default="")
-
+    photo = FilerImageField(null=True, blank=True,
+                           related_name="person_photo")
     def __str__(self):
         return self.first_name + " " + self.last_name
 
@@ -27,16 +29,19 @@ class Company(models.Model):
     address = models.CharField(max_length=255, default="")
     box_number = models.CharField(max_length=255, default="")
     postal_code = models.CharField(max_length=255, default="")
-
+    logo = FilerImageField(null=True, blank=True,
+                           related_name="logo_company")
     def __str__(self):
         return self.company_name + " (" + self.city + ")"
+
 
 class CompanyPerson(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
     role = models.CharField(max_length=255)
     image = models.ImageField(upload_to='images/')
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    companyadmin = models.BooleanField()
+    #companyadmin = models.BooleanField(default=0)
 
     def __str__(self):
         return self.person.__str__() + ": " + self.role
+

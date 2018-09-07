@@ -22,9 +22,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
-SECRET_KEY = 'Secret Key'
+SECRET_KEY = '%llej&p5fuljmvgm=jzl31l0g(ogw8j&m#e7xp(tqdmmguizdr'
 
 # Application definition
 
@@ -42,7 +42,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'django_tables2',
+    'bootstrap4',
     'django_filters',
+    'pure_pagination',
+    'popupcrud',
+    'widget_tweaks',
+    'easy_thumbnails',
+    'filer',
+    'mptt',
+    'website.apps.WebsiteConfig',
 ]
 
 MIDDLEWARE = [
@@ -60,7 +68,7 @@ ROOT_URLCONF = 'website.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), 'templates']
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -124,20 +132,67 @@ USE_L10N = True
 USE_TZ = True
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+THUMBNAIL_HIGH_RESOLUTION = True
+
+THUMBNAIL_PROCESSORS = (
+    'easy_thumbnails.processors.colorspace',
+    'easy_thumbnails.processors.autocrop',
+    #'easy_thumbnails.processors.scale_and_crop',
+    'filer.thumbnail_processors.scale_and_crop_with_subject_location',
+    'easy_thumbnails.processors.filters',
+)
+FILER_CANONICAL_URL = 'sharing/'
+
+DEFAULT_FILER_SERVERS = {
+    'public': {
+        'main': {
+            'ENGINE': 'filer.server.backends.default.DefaultServer',
+        },
+        'thumbnails': {
+            'ENGINE': 'filer.server.backends.default.DefaultServer',
+        }},
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'website/static/')
+STATIC_URL = '/static/'
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"),
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = '/static/'
-
+#STATICFILES_DIRS =  ["/home/user/project/django1/top/listing/static"]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+
+FILER_STORAGES = {
+    'public': {
+        'main': {
+            'ENGINE': 'filer.storage.PublicFileSystemStorage',
+            'OPTIONS': {
+                'location': MEDIA_ROOT,
+            },
+            'UPLOAD_TO': 'filer.utils.generate_filename.by_date',
+            'UPLOAD_TO_PREFIX': 'filer_public',
+        },
+        'thumbnails': {
+            'ENGINE': 'filer.storage.PublicFileSystemStorage',
+            'OPTIONS': {
+                'location': MEDIA_ROOT,
+            },
+            'THUMBNAIL_OPTIONS': {
+                'base_dir': 'content_thumbnails',
+            },
+        },
+    },
+}
+
+POPUPCRUD = {
+    'base_template': 'mybase.html',
+}
 
 try:
   from .local_settings import *

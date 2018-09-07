@@ -37,3 +37,16 @@ body {
 .form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
     display: none;
 }
+
+#HASH {
+  width: 100%;
+}
+
+#HASH div {
+  width: 49%;
+  display: inline-block;
+}
+
+#right {
+  text-align: right;
+}
