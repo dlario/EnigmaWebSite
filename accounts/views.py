@@ -1,20 +1,57 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib import auth
-from django.views.generic import FormView, CreateView, TemplateView
+from django.views.generic import FormView
 from inspections.models import Inspection
-from accounts.models import Person, CompanyPerson, Company, ContactInformation
+from inspections.filters import InspectionTitleFilter
 
-from accounts.forms import PersonForm
-from inspections.filters import InspectionFilter, InspectionTitleFilter
+from accounts.models import Person, CompanyPerson, Company
+from accounts.forms import PersonForm, CompanyForm
+
 from django.urls import reverse_lazy, reverse
-from popupcrud.views import PopupCrudViewSet
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 
+from popupcrud.views import PopupCrudViewSet
+
+
 class personview(FormView):
-    template_name = 'accounts/userdetails.html'
+    template_name = 'accounts/persondetails.html'
     form_class = PersonForm
+
+class PersonCRUDViewSet(PopupCrudViewSet):
+    model = Person
+    app_name = 'accounts'
+
+    form_class = PersonForm
+    list_display = ('first_name', 'middle_name', 'last_name')
+    list_url = reverse_lazy("accounts:authors")
+    new_url = reverse_lazy("accounts:new-author")
+    legacy_crud = False
+
+    """
+    form_class = AuthorForm
+    list_permission_required = ('library.add_author',)
+    create_permission_required = ('library.add_author',)
+    update_permission_required = ('library.change_author',)
+    delete_permission_required = ('library.delete_author',)
+    """
+#Custom Attributes
+#    def half_age(self, author):  # pylint: disable=R0201
+#        return author.age / 2 if author.age else '-'
+
+#    half_age.label = "Half life"
+#    half_age.order_field = 'age'''
+
+    def get_edit_url(self, obj):
+        return reverse_lazy("account:edit-person", kwargs={'pk': obj.pk})
+
+    def get_delete_url(self, obj):
+        #Locking
+        # if not obj.age or obj.age < 18:
+        #    return None
+        return reverse_lazy("account:delete-person", kwargs={'pk': obj.pk})
+
 
 def person_list(request):
     persons = Person.objects.all()
@@ -92,7 +129,41 @@ def signup(request):
         return render(request, 'accounts/signup.html')
 
 
-def clientdetails(request):
+class CompanyCRUDViewSet(PopupCrudViewSet):
+    model = Company
+    app_name = 'accounts'
+
+    form_class = CompanyForm
+    list_display = ('first_name', 'middle_name', 'last_name')
+    list_url = reverse_lazy("accounts:authors")
+    new_url = reverse_lazy("accounts:new-author")
+    legacy_crud = False
+
+    """
+    form_class = AuthorForm
+    list_permission_required = ('library.add_author',)
+    create_permission_required = ('library.add_author',)
+    update_permission_required = ('library.change_author',)
+    delete_permission_required = ('library.delete_author',)
+    """
+#Custom Attributes
+#    def half_age(self, author):  # pylint: disable=R0201
+#        return author.age / 2 if author.age else '-'
+
+#    half_age.label = "Half life"
+#    half_age.order_field = 'age'''
+
+    def get_edit_url(self, obj):
+        return reverse_lazy("account:edit-person", kwargs={'pk': obj.pk})
+
+    def get_delete_url(self, obj):
+        #Locking
+        # if not obj.age or obj.age < 18:
+        #    return None
+        return reverse_lazy("account:delete-person", kwargs={'pk': obj.pk})
+
+
+def companydetails(request):
     if request.method == 'POST':
         '''print(request.POST.get('bcompanyname'))
         print(request.POST.get('bfirstname'))
@@ -129,7 +200,7 @@ def clientdetails(request):
 
         CompanyInspection = Inspection.objects.all()  # filter(company=CompanyAccount)
 
-        return render(request, 'accounts/clienthome.html',
+        return render(request, 'accounts/companyhome.html',
                       {'inspections': CompanyInspection, 'company': CompanyAccount, 'person': PersonAccount})
     else:
         UserDate = request.user
@@ -137,7 +208,7 @@ def clientdetails(request):
         CompanyAccountPerson = CompanyPerson.objects.filter(person=PersonAccount).first()
         CompanyAccount = Company.objects.filter(id=CompanyAccountPerson.company.id).first()
 
-        return render(request, 'accounts/clientdetails.html', {'company': CompanyAccount, 'person': PersonAccount})
+        return render(request, 'accounts/companydetails.html', {'company': CompanyAccount, 'person': PersonAccount})
 
 def savedetails(request):
     if request.method == 'POST':
@@ -165,10 +236,11 @@ def savedetails(request):
         CompanyAccount = Company.objects.filter(id=CompanyAccountPerson.company.id).first()
         CompanyInspection = Inspection.objects.all()  # filter(company=CompanyAccount)
 
-        return render(request, 'accounts/clienthome.html',
+        return render(request, 'accounts/companyhome.html',
                       {'inspections': CompanyInspection, 'company': CompanyAccount, 'person': PersonAccount})
 
-def clienthome(request):
+
+def companyhome(request):
 
     PersonAccount = Person.objects.filter(user=request.user).first()
     CompanyAccountPerson = CompanyPerson.objects.filter(person=PersonAccount).first()
@@ -179,12 +251,11 @@ def clienthome(request):
 
     CompanyInspection = InspectionTitleFilter(request.GET, queryset=Inspections)
 
-    return render(request, 'accounts/clienthome.html', {'company': CompanyAccount,
+    return render(request, 'accounts/companyhome.html', {'company': CompanyAccount,
                                                         'person': PersonAccount,
                                                         'employee': CompanyPersonnel,
                                                         'filter': CompanyInspection,
                                                         'inspections': CompanyInspection})
-
 
 def login(request):
     if request.method == 'POST':

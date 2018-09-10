@@ -5,14 +5,14 @@
 {% block content %}
     <body class="bg-light">
 
-    <title>Client Information Sheet</title>
+    <title>Company Information Sheet</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
           integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
     </head>
 
     <link rel="stylesheet" type="text/css" href="{% static 'form-validation.css' %}"/>
-    <form class="form-clientdetails" method="POST" action="{% url 'clientdetails' %}">
+    <form class="form-clientdetails" method="POST" action="{% url 'companydetails' %}">
         {% csrf_token %}
         <div class="container">
             <div class="py-5 text-center">

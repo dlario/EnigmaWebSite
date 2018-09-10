@@ -7,27 +7,21 @@ from accounts.models import Company, Person
 from inspections.forms import InspectionFilterFormHelper, InspectionForm, ProjectLookupFormHelper
 from django.utils import timezone, html
 from django.views.generic import FormView, TemplateView, ListView
-from django_tables2 import RequestConfig, SingleTableView, Table, LinkColumn, Column, CheckBoxColumn, FileColumn, TemplateColumn
-from django_tables2.utils import A
+from django_tables2 import RequestConfig, SingleTableView, LinkColumn, TemplateColumn
 from django.utils.html import format_html
 
-from sqlalchemy import update, Table, Column, DateTime, Integer, String, Text, Date, Boolean, Numeric, MetaData, ForeignKey, create_engine, exists
-from sqlalchemy.orm import aliased, Query, joinedload, lazyload, subqueryload, join, outerjoin, sessionmaker
-from sqlalchemy.orm import sessionmaker, relationship
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Table, Column
 
-from inspections.forms import Project, CreditCardForm, CartForm, Address
+from inspections.forms import CreditCardForm
+
+
 #def home(request):
 #    inspection = Inspection.objects
 #    return render(request, 'inspections/home.html',{'inspections':inspection})
 
-class MainView(FormView):
-    template_name = 'inspections/create.html'
-    form_class = Project
-
 class BookView(FormView):
     template_name = 'inspections/bookinspection.html'
-    form_class = Project
+    form_class = InspectionForm
 
 
 class InspectionTable(Table):
@@ -35,8 +29,6 @@ class InspectionTable(Table):
         #url = record.get_absolute_url()
         url = "/services/engineering"
         edit_entries = TemplateColumn('<a href="/inspection/detail/{{record.id}}">Edit</a>')
-
-
         return html.mark_safe('<a href="%s">%s</a>' % (url, record))
 
 
@@ -150,7 +142,7 @@ def create(request):
 
 def inspections(request):
     inspections = Inspection.objects
-    return render(request, 'inspections/inspections.html',{'inspections':inspections})
+    return render(request, 'inspections/inspections.html', {'inspections':inspections})
 
 def detail(request, inspection_id):
     inspection = get_object_or_404(Inspection, pk=inspection_id)

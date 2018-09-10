@@ -31,3 +31,32 @@ class PersonForm(forms.ModelForm):
                 Div('middle_name', css_class='.col-sm-4'),
                 Div('last_name', css_class='.col-sm-4'), css_class='row')
         )
+
+class CompanyForm(forms.ModelForm):
+    # department = forms.ModelChoiceField(queryset=department.objects.all())
+    class Meta:
+        model = Company
+        fields =['company_name',
+                 'city',
+                 'province',
+                 'address',
+                 'box_number',
+                 'postal_code',
+                 ]
+
+    def __init__(self, *args, **kwargs):
+        super(CompanyForm, self).__init__(*args, **kwargs)
+
+        # Uni-form
+        self.helper = FormHelper()
+        self.helper.form_method = 'POST'
+        #helper.form_id = 'id-project'
+        #action = "{% url 'home' %}"
+        self.helper.form_action = 'create'
+        #helper.form_class = 'form-horizontal'
+        self.helper.layout = Layout(
+            Div(
+                Div('company_name', css_class='.col-sm-4'),
+                Div('city', css_class='.col-sm-4'),
+                Div('province', css_class='.col-sm-4'), css_class='row')
+        )

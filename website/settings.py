@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'equipment.apps.EquipmentConfig',
     'aboutus.apps.AboutusConfig',
     'services.apps.ServicesConfig',
+    'projects.apps.ProjectsConfig',
     'inspections.apps.InspectionsConfig',
     'accounts.apps.AccountsConfig',
     'django.contrib.admin',
@@ -159,8 +160,7 @@ DEFAULT_FILER_SERVERS = {
 STATIC_URL = '/static/'
 #STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"),
-]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"),]
 
 #STATICFILES_DIRS =  ["/home/user/project/django1/top/listing/static"]
 

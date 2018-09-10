@@ -14,6 +14,7 @@
   </component>
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/static" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.5 (EnigmaWebSite)" jdkType="Python SDK" />
@@ -23,7 +24,14 @@
     <option name="TEMPLATE_CONFIGURATION" value="Django" />
     <option name="TEMPLATE_FOLDERS">
       <list>
-        <option value="$MODULE_DIR$/../EnigmaWebSite\templates" />
+        <option value="$MODULE_DIR$/templates" />
+        <option value="$MODULE_DIR$/inspections/templates" />
+        <option value="$MODULE_DIR$/equipment/templates" />
+        <option value="$MODULE_DIR$/services/templates" />
+        <option value="$MODULE_DIR$/website/templates" />
+        <option value="$MODULE_DIR$/accounts/templates" />
+        <option value="$MODULE_DIR$/aboutus/templates" />
+        <option value="$MODULE_DIR$/projects/templates" />
       </list>
     </option>
   </component>

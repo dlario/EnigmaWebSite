@@ -1,9 +1,7 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404
 from .models import Equipment
-from django.utils import timezone
 from django.views.generic import FormView
-from inspections.forms import CreditCardForm, CartForm, Address
+from inspections.forms import Address
 #def home(request):
 #    inspection = Inspection.objects
 #    return render(request, 'inspections/home.html',{'inspections':inspection})
@@ -13,17 +11,19 @@ class MainView(FormView):
     form_class = Address
     #return render(request, 'index.html', {'form': MessageForm()})
 
-def clientprojects(request):
-    return render (request, 'equipment/clientprojects.html')
+def equipmentdetail(request, pk):
+    equipmentdetail = get_object_or_404(Equipment, pk=pk)
+    return render (request, 'equipment/equipmentdetail.html', {'equipment': equipmentdetail})
 
-def equipmentdetail(request):
-    return render (request, 'equipment/equipmentdetail.html')
 
 def equipmentimages(request):
     return render (request, 'equipment/equipmentimages.html')
 
+
 def equipmentlist(request):
-    return render (request, 'equipment/equipmentlist.html')
+    EquipmentList = Equipment.objects.all()#filter(company=CompanyAccount)
+
+    return render(request, 'equipment/equipmentlist.html', {'equipment': EquipmentList})
 
 #@login_required(login_url="/accounts/signup")
 '''def create(request):

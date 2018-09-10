@@ -1,0 +1,30 @@
+{% for e in equipment %}
+
+    <!-- Project One -->
+<div class="row">
+    <div class="col-md-7">
+        <a href="#">
+            <img class="img-fluid rounded mb-3 mb-md-0" src="http://placehold.it/700x300" alt="">
+        </a>
+    </div>
+    <div class="col-md-5">
+        <h3>Equipment</h3>
+    <tr>
+        <td>{{ e.equipment_category }} </td>
+        <td>{{ e.equipment_subcategory }} </td>
+        <td>{{ e.manufacturer }} </td>
+        <td>{{ e.serial_number }} </td>
+        <td>{{ e.model_number }} </td>
+    </tr>
+
+
+        <a class="btn btn-primary" href="{% url 'equipmentdetail' e.id %}">Equipment Details</a>
+    </div>
+</div>
+
+<hr>
+{% empty %}
+  <tr>
+    <td colspan="8" class="text-center bg-warning">No Equipment Listed</td>
+  </tr>
+{% endfor %}

@@ -1,39 +1,56 @@
-{% extends 'base.html' %}
-
-{% if error %}
-    {{ error }}
-    <br/>
-    <br/>
-{% endif %}
-
 {% block content %}
     {% load staticfiles %}
 
-    <link rel="stylesheet" type="text/css" href="{% static 'signin.css' %}"/>
+                <!-- Categories Widget -->
+                <div class="card my-4">
+                    <h5 class="card-header">Activity Filter</h5>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="[ form-group ]">
 
-    <body class="text-center">
-    <form class="form-signin" method="POST" action="{% url 'login' %}">
-        {% csrf_token %}
-        <img src="{% static 'e-icon.png' %}" height=100 width=100 class="d-inline-block align-top"/>
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-        <label for="inputUserName" class="sr-only">Username</label>
-        <input type="text" id="inputUserName" class="form-control" name="username" placeholder="User Name" required
-               autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Password" required>
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" value="remember-me"> Remember me
-            </label>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-    </form>
-    </body>
+                                    <div class="checkbox">
+                                        <input id="checkbox1" type="checkbox">
+                                        <label for="checkbox1">
+                                            All
+                                        </label>
+                                    </div>
+                                    <div class="checkbox checkbox-primary">
+                                        <input id="checkbox2" type="checkbox" checked="">
+                                        <label for="checkbox2">
+                                            Inspections
+                                        </label>
+                                    </div>
+                                    <div class="checkbox checkbox-success">
+                                        <input id="checkbox3" type="checkbox">
+                                        <label for="checkbox3">
+                                            Projects
+                                        </label>
+                                    </div>
+                                    <div class="checkbox checkbox-info">
+                                        <input id="checkbox4" type="checkbox">
+                                        <label for="checkbox4">
+                                            Active
+                                        </label>
+                                    </div>
+                                    <div class="checkbox checkbox-warning">
+                                        <input id="checkbox5" type="checkbox" checked="">
+                                        <label for="checkbox5">
+                                            Require Action
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-    <footer class="text-muted">
-        <div class="container text-center">
-            <p>&copy; Enigma Design Solutions {% now "Y" %}</p>
-        </div>
+                    </div>
+                    <form method="get">
+                        <div>
+                            {{ filter.form.as_p }}
+                            <button type="submit">Search</button>
+                        </div>
+                    </form>
+                </div>
     </footer>
 
 

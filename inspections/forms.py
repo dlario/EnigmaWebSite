@@ -1,11 +1,14 @@
 from django import forms
-
+from django.urls import reverse_lazy
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout, Field, Div, Fieldset, HTML
+from crispy_forms.layout import Submit, Layout, Field, Div
 from crispy_forms.bootstrap import (
     PrependedText, AppendedText, PrependedAppendedText, FormActions)
-from equipment.models import Equipment
 from inspections.models import Inspection
+from projects.models import Project
+
+from popupcrud.widgets import RelatedFieldPopupFormWidget
+from django_select2.forms import Select2Widget
 
 class Project(forms.ModelForm):
     # department = forms.ModelChoiceField(queryset=department.objects.all())
@@ -29,6 +32,11 @@ class Project(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(Project, self).__init__(*args, **kwargs)
+
+        companyclient = self.fields['client']
+        companyclient.widget = RelatedFieldPopupFormWidget(
+            widget=Select2Widget(choices=companyclient.choices),
+            new_url=reverse_lazy("accounts:new-company"))
 
     # Uni-form
     helper = FormHelper()
