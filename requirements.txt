@@ -10,3 +10,12 @@ pytz==2020.1
 six==1.15.0
 bootstrap4==0.1.0
 django_filters
+django-crispy-forms
+django-tables2
+django-filter
+django-pure-pagination
+django-popupcrud
+django-widget-tweaks
+easy-thumbnails
+django-filer
+django-popup-view-field
