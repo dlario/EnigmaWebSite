@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
-{% load staticfiles %}
+{% load static %}
 
 {% block content %}
     <body class="bg-light">
@@ -50,6 +50,22 @@
                     <div class="tab-pane fade show active" id="pills-physical" role="tabpanel"
                          aria-labelledby="pills-physical-tab">
                         <form class="needs-validation" novalidate align="left">
+                            {% if admin %}
+                                <div class="dropdown">
+                                    <button type="button" class="btn btn-primary dropdown-toggle"
+                                            data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false">
+                                        {{ company.company_name }}
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        {% for clist in companylist %}
+                                            <a class="dropdown-item"
+                                               href={% url 'companyhome2' clist.id %}>{{ clist.company_name }}</a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+
+                            {% else %}
                             <div class="mb-3">
                                 <label for="companyname">Company</label>
                                 <input type="text" class="form-control" name = "companyname" id="companyname"
@@ -58,6 +74,7 @@
                                     Full Company Legal Name
                                 </div>
                             </div>
+                            {% endif %}
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">

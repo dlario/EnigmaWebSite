@@ -60,3 +60,31 @@ class CompanyForm(forms.ModelForm):
                 Div('city', css_class='.col-sm-4'),
                 Div('province', css_class='.col-sm-4'), css_class='row')
         )
+
+class CompanyPersonForm(forms.ModelForm):
+    # department = forms.ModelChoiceField(queryset=department.objects.all())
+    class Meta:
+        model = CompanyPerson
+        fields =['person',
+                 'role',
+                 'image',
+                 'company']
+
+    def __init__(self, *args, **kwargs):
+        super(CompanyPersonForm, self).__init__(*args, **kwargs)
+
+        # Uni-form
+        self.helper = FormHelper()
+        self.helper.form_method = 'POST'
+        #helper.form_id = 'id-project'
+        #action = "{% url 'home' %}"
+        self.helper.form_action = 'create'
+        #helper.form_class = 'form-horizontal'
+        self.helper.layout = Layout(
+            Div(
+                Div('person', css_class='.col-sm-4'),
+                Div('role', css_class='.col-sm-4'),
+                Div('image', css_class='.col-sm-4'),
+                Div('company', css_class='.col-sm-4'),
+                css_class='row')
+        )

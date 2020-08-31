@@ -159,6 +159,14 @@ def bookinspection(request, equipment_id):
         product.save()
         return redirect('/equipment/' + str(equipment_id))
 
+def inspectionimages(request, pk):
+    inspections = Inspection.objects
+    return render(request, 'inspections/inspectionimageimport.html')#, {'inspections':inspections})
+
+def inspectiondocuments(request, pk):
+    inspections = Inspection.objects
+    return render(request, 'inspections/inspectiondocumentimport.html')#, {'inspections':inspections})
+
 
 class FooTableView(PagedFilteredTableView):
     model = Inspection

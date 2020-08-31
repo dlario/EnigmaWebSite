@@ -13,7 +13,7 @@ class ProjectFilter(FilterSet):
             'title': ['contains'],
         }
 
-class InspectionTitleFilter(FilterSet):
+class ProjectTitleFilter(FilterSet):
     class Meta:
         model = Project
         # fields = ['project_number', 'owner']

@@ -12,6 +12,7 @@ class ContactInline(admin.TabularInline):
 class PersonInline(admin.TabularInline):
     model = Person
 
+
 class CompanyPersonAdmin(admin.ModelAdmin):
     inlines = [CompanyPersonInline]
 

@@ -1,0 +1,277 @@
+{% extends 'base.html' %}
+{% load django_tables2 crispy_forms_tags %}
+{% crispy projectrole %}
+{% load static %}
+{% block content %}
+    {% load django_popup_view_field_tags %}
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <!DOCTYPE html>
+
+    <html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
+              integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B"
+              crossorigin="anonymous">
+    </head>
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" type="text/css" href="{% static 'blog-home.css' %}"/>
+    <script type="text/javascript" src="{% static '/dropzone/dropzone.js' %}"></script>
+
+
+    </head>
+
+    <body>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+
+            <!-- Blog Entries Column -->
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-10">
+                        <a href="{{ project.project_number }}"><h1>{{ project.title }}</h1></a>
+                    </div>
+                </div>
+                <div class="col-4 text-left">
+                    <h5><span class="oi oi-clock"></span> {{ project.start_date }}</h5>
+                </div>
+                <!-- Blog Post -->
+                <div class="card mb-4">
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-timeline" role="tabpanel"
+                             aria-labelledby="pills-timeline-tab">
+                            {% if mainimage %}
+                                <img src="{{ mainimage.document.url }}" class="img-fluid"/>
+                            {% else %}
+                                <div id="dropzone">
+                                    <form action="{% url 'uploadfiles' %}" class="dropzone" id="uploadmain"
+                                          method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="project_id" value="{{ project.id }}">
+                                        <input type="hidden" name="group_id" value="2">
+                                        <input type="hidden" name="description" value="Main Image">
+
+                                        <div class="dz-message">
+                                            <img class="card-img-top" src="http://placehold.it/750x300"
+                                                 alt="Card image cap">
+                                        </div>
+                                    </form>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="pills-timeline-tab" data-toggle="pill"
+                               href="#pills-timeline"
+                               role="tab" aria-controls="pills-timeline" aria-selected="true">Timeline</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-billing-tab" data-toggle="pill" href="#pills-billing"
+                               role="tab" aria-controls="pills-billing" aria-selected="false">Billing</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card text-white bg-secondary my-2 text-center">
+                    <div class="card-body">
+                        <p class="text-white m-0">Project Activity</p>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- Sidebar Widgets Column -->
+            <div class="col-md-4">
+
+
+                <div class="card my-4">
+                    <h5 class="card-header">Team</h5>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <ul class="list-unstyled mb-0">
+                                    <li>
+                                        <a href="">Lead: {{ projectlead }}</a>
+                                    </li>
+                                    <li>
+                                        <a href="">Client: {{ consignee }}</a>
+                                    </li>
+                                    <li>
+                                        <a href="">Owner: {{ owner }}</a>
+                                    </li>
+                                    <li>
+                                        <a href="">Other: Use Roles to add others</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRoles">
+                        Launch demo modal
+                    </button>
+                </div>
+
+                <!-- Categories Widget -->
+                <div class="card my-4">
+                    <h5 class="card-header">Milestones</h5>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <ul class="list-unstyled mb-0">
+                                    <li>
+                                        <a href="">Project Initiation - Completed</a>
+                                    </li>
+                                    <li>
+                                        <a href="">Preliminary Design - Completed</a>
+                                    </li>
+                                    <li>
+                                        <a href="">Calculations - Completed</a>
+                                    </li>
+                                    <li>
+                                        <a href="">Drawings - August 30, 2018</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-sm btn-primary btn-block" type="submit">Add Milestone</button>
+                </div>
+
+                <!-- Side Widget -->
+                <div class="card my-4">
+                    <h5 class="card-header">Documents</h5>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <ul class="list-unstyled mb-0">
+                                    <li>
+
+                                        <a class="dropzone needsclick" id="demo-upload" href="">Estimate - FINAL</a>
+                                    </li>
+                                    <li>
+                                        <a href="">Contract - FINAL</a>
+                                    </li>
+                                    <li>
+                                        <a href="">Report - UNDER REVIEW</a>
+                                    </li>
+                                    <li>
+                                        <a href="">Drawings - PRELIMINARY</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-sm btn-primary btn-block" type="submit">Add Document</button>
+                </div>
+
+                <!-- Side Widget -->
+                <div class="card my-4">
+                    <h5 class="card-header">Tasks</h5>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <ul class="list-unstyled mb-0">
+                                    <li>
+                                        <a href="">Drawings - Arsenal</a>
+                                    </li>
+                                    <li>
+                                        <a href="">Repairs - Kaymor</a>
+                                    </li>
+                                    <li>
+                                        <a href="">Mechanical - NWC</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-sm btn-primary btn-block" type="submit">Add Task</button>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">&copy; Enigma Design Solutions {% now "Y" %}</p>
+        <ul class="list-inline">
+            <li class="list-inline-item"><a href="#">Privacy</a></li>
+            <li class="list-inline-item"><a href="#">Terms</a></li>
+            <li class="list-inline-item"><a href="#">Support</a></li>
+        </ul>
+    </footer>
+    <!-- Modal -->
+    <div class="modal fade" id="addRoles" tabindex="-1" role="dialog" aria-labelledby="lableaddRoles"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Project Roles</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {% crispy projectrole %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </body>
+
+    </html>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#example').DataTable({
+                responsive: {
+                    details: {
+                        display: $.fn.dataTable.Responsive.display.modal({
+                            header: function (row) {
+                                var data = row.data();
+                                return 'Details for ' + data[0] + ' ' + data[1];
+                            }
+                        }),
+                        renderer: $.fn.dataTable.Responsive.renderer.tableAll({
+                            tableClass: 'table'
+                        })
+                    }
+                }
+            });
+        });</script>
+
+    <script type="text/javascript">
+        Dropzone.options.uploadmain = {
+            init: function () {
+                // Set up any event handlers
+                this.on('complete', function () {
+                    location.reload();
+                });
+            }
+        };</script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
+
+{% endblock %}

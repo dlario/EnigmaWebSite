@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib import auth
 from django.views.generic import FormView
-from inspections.models import Inspection
-from inspections.filters import InspectionTitleFilter
+from projects.models import Project
+from projects.filters import ProjectTitleFilter
 
 from accounts.models import Person, CompanyPerson, Company
 from accounts.forms import PersonForm, CompanyForm
@@ -11,13 +11,15 @@ from accounts.forms import PersonForm, CompanyForm
 from django.urls import reverse_lazy, reverse
 from django.template.loader import render_to_string
 from django.http import JsonResponse
+from django.db.models import Q
 
 from popupcrud.views import PopupCrudViewSet
-
+from django.db.models.functions import TruncMonth, TruncYear
 
 class personview(FormView):
     template_name = 'accounts/persondetails.html'
     form_class = PersonForm
+
 
 class PersonCRUDViewSet(PopupCrudViewSet):
     model = Person
@@ -36,18 +38,19 @@ class PersonCRUDViewSet(PopupCrudViewSet):
     update_permission_required = ('library.change_author',)
     delete_permission_required = ('library.delete_author',)
     """
-#Custom Attributes
-#    def half_age(self, author):  # pylint: disable=R0201
-#        return author.age / 2 if author.age else '-'
 
-#    half_age.label = "Half life"
-#    half_age.order_field = 'age'''
+    # Custom Attributes
+    #    def half_age(self, author):  # pylint: disable=R0201
+    #        return author.age / 2 if author.age else '-'
+
+    #    half_age.label = "Half life"
+    #    half_age.order_field = 'age'''
 
     def get_edit_url(self, obj):
         return reverse_lazy("account:edit-person", kwargs={'pk': obj.pk})
 
     def get_delete_url(self, obj):
-        #Locking
+        # Locking
         # if not obj.age or obj.age < 18:
         #    return None
         return reverse_lazy("account:delete-person", kwargs={'pk': obj.pk})
@@ -56,6 +59,7 @@ class PersonCRUDViewSet(PopupCrudViewSet):
 def person_list(request):
     persons = Person.objects.all()
     return render(request, 'persons/includes/partial_person_create.html', {'persons': persons})
+
 
 def save_person_form(request, form, template_name):
     data = dict()
@@ -109,6 +113,7 @@ def person_delete(request, pk):
                                              )
     return JsonResponse(data)
 
+
 def signup(request):
     if request.method == 'POST':
         # User has info and wants an account now!
@@ -146,18 +151,19 @@ class CompanyCRUDViewSet(PopupCrudViewSet):
     update_permission_required = ('library.change_author',)
     delete_permission_required = ('library.delete_author',)
     """
-#Custom Attributes
-#    def half_age(self, author):  # pylint: disable=R0201
-#        return author.age / 2 if author.age else '-'
 
-#    half_age.label = "Half life"
-#    half_age.order_field = 'age'''
+    # Custom Attributes
+    #    def half_age(self, author):  # pylint: disable=R0201
+    #        return author.age / 2 if author.age else '-'
+
+    #    half_age.label = "Half life"
+    #    half_age.order_field = 'age'''
 
     def get_edit_url(self, obj):
         return reverse_lazy("account:edit-person", kwargs={'pk': obj.pk})
 
     def get_delete_url(self, obj):
-        #Locking
+        # Locking
         # if not obj.age or obj.age < 18:
         #    return None
         return reverse_lazy("account:delete-person", kwargs={'pk': obj.pk})
@@ -176,7 +182,7 @@ def companydetails(request):
         print(request.POST.get('bprovince'))
         print(request.POST.get('bpostalcode'))'''
 
-        #TODO: Create a database recording changes in tranactions. Have the server know which ones were updated
+        # TODO: Create a database recording changes in tranactions. Have the server know which ones were updated
         PersonAccount = Person.objects.filter(user=request.user).first()
         PersonAccount.first_name = request.POST.get('firstname')
         PersonAccount.last_name = request.POST.get('lastname')
@@ -192,16 +198,19 @@ def companydetails(request):
         CompanyAccount = Company.objects.filter(id=CompanyAccountPerson.company.id).first()
 
         CompanyAccount.company_name = request.POST.get('companyname')
-        #CompanyAccount.city = request.POST.get('firstname')
+        # CompanyAccount.city = request.POST.get('firstname')
         CompanyAccount.province = request.POST.get('province')
         CompanyAccount.address = request.POST.get('address')
         CompanyAccount.box_number = request.POST.get('firstname')
         CompanyAccount.postal_code = request.POST.get('postalcode')
 
-        CompanyInspection = Inspection.objects.all()  # filter(company=CompanyAccount)
+        CompanyInspection = Project.objects.all()  # filter(company=CompanyAccount)
 
-        return render(request, 'accounts/companyhome.html',
-                      {'inspections': CompanyInspection, 'company': CompanyAccount, 'person': PersonAccount})
+        if CompanyAccount:
+            return render(request, 'accounts/companyhome.html',
+                          {'inspections': CompanyInspection, 'company': CompanyAccount, 'person': PersonAccount})
+        else:
+            print("fail")
     else:
         UserDate = request.user
         PersonAccount = Person.objects.filter(user=request.user).first()
@@ -209,6 +218,7 @@ def companydetails(request):
         CompanyAccount = Company.objects.filter(id=CompanyAccountPerson.company.id).first()
 
         return render(request, 'accounts/companydetails.html', {'company': CompanyAccount, 'person': PersonAccount})
+
 
 def savedetails(request):
     if request.method == 'POST':
@@ -234,37 +244,85 @@ def savedetails(request):
         PersonAccount = Person.objects.filter(user=request.user).first()
         CompanyAccountPerson = CompanyPerson.objects.filter(person=PersonAccount).first()
         CompanyAccount = Company.objects.filter(id=CompanyAccountPerson.company.id).first()
-        CompanyInspection = Inspection.objects.all()  # filter(company=CompanyAccount)
+        CompanyInspection = Project.objects.all()  # filter(company=CompanyAccount)
 
         return render(request, 'accounts/companyhome.html',
                       {'inspections': CompanyInspection, 'company': CompanyAccount, 'person': PersonAccount})
 
 
 def companyhome(request):
-
     PersonAccount = Person.objects.filter(user=request.user).first()
     CompanyAccountPerson = CompanyPerson.objects.filter(person=PersonAccount).first()
+
     CompanyAccount = Company.objects.filter(id=CompanyAccountPerson.company.id).first()
 
-    CompanyPersonnel = CompanyPerson.objects.filter(id=CompanyAccountPerson.company.id).all()
-    Inspections = Inspection.objects.all()#filter(company=CompanyAccount)
+    CompanyPersonnel = CompanyPerson.objects.filter(id=CompanyAccount.id).all()
 
-    CompanyInspection = InspectionTitleFilter(request.GET, queryset=Inspections)
+    AdminStatus = True
+
+    if AdminStatus:
+        CompanyList = Company.objects.all().order_by("company_name")
+        Projects = Project.objects.all()  # filter(company=CompanyAccount)
+        CompanyInspection = ProjectTitleFilter(request.GET, queryset=Projects)
+    else:
+        CompanyList = None
+        Projects = Project.objects.filter(Q(client=CompanyAccount.id) | Q(owner=CompanyAccount.id))
+
+    CompanyInspection = ProjectTitleFilter(request.GET, queryset=Projects)
 
     return render(request, 'accounts/companyhome.html', {'company': CompanyAccount,
-                                                        'person': PersonAccount,
-                                                        'employee': CompanyPersonnel,
-                                                        'filter': CompanyInspection,
-                                                        'inspections': CompanyInspection})
+                                                         'companylist': CompanyList,
+                                                         'admin': AdminStatus,
+                                                         'person': PersonAccount,
+                                                         'employee': CompanyPersonnel,
+                                                         'filter': CompanyInspection,
+                                                         'inspections': CompanyInspection})
+
+def companyhome2(request, company_id=None):
+    PersonAccount = Person.objects.filter(user=request.user).first()
+    CompanyAccountPerson = CompanyPerson.objects.filter(person=PersonAccount).first()
+
+    if company_id is None:
+        CompanyAccount = Company.objects.filter(id=CompanyAccountPerson.company.id).first()
+    else:
+        CompanyAccount = Company.objects.filter(id=company_id).first()
+
+    CompanyPersonnel = CompanyPerson.objects.filter(id=CompanyAccount.id).all()
+
+    Projects = Project.objects.filter(Q(client=company_id) | Q(owner=company_id))
+
+    CompanyInspection = ProjectTitleFilter(request.GET, queryset=Projects)
+
+    AdminStatus = True
+
+    if AdminStatus:
+        CompanyList = Company.objects.all().order_by("company_name")
+    else:
+        CompanyList = None
+
+    return render(request, 'accounts/companyhome.html', {'company': CompanyAccount,
+                                                         'companylist': CompanyList,
+                                                         'admin': AdminStatus,
+                                                         'person': PersonAccount,
+                                                         'employee': CompanyPersonnel,
+                                                         'filter': CompanyInspection,
+                                                         'inspections': CompanyInspection})
 
 def login(request):
     if request.method == 'POST':
         user = auth.authenticate(username=request.POST['username'], password=request.POST['password'])
-        print(request.POST['username'], request.POST['password'])
-        print(user)
+
+        PersonAccount = Person.objects.filter(user=user).first()
+        CompanyAccountPerson = CompanyPerson.objects.filter(person=PersonAccount).first()
+
         if user is not None:
             auth.login(request, user)
-            return redirect('clienthome')
+            # todo bounce to company new page if no company exists with name
+            if CompanyAccountPerson:
+                return redirect('companyhome')
+            else:
+                return redirect('companydetails')
+
         else:
             return render(request, 'accounts/login.html', {'error': 'username or password is incorrect.'})
     else:
@@ -274,7 +332,7 @@ def login(request):
 class PersonViewSet(PopupCrudViewSet):
     model = Person
     form_class = PersonForm
-    #fields = ('first_name', 'middle_name', 'last_name')
+    # fields = ('first_name', 'middle_name', 'last_name')
     list_display = ('first_name', 'middle_name', 'last_name')
     list_url = reverse_lazy("accounts:person:list")
     new_url = reverse_lazy("accounts:person:create")

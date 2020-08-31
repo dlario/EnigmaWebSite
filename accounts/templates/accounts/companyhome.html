@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
-{% load staticfiles %}
+{% load static %}
 {% load crispy_forms_tags %}
 
 {% block javascript %}
@@ -31,8 +31,25 @@
 
             <!-- Blog Entries Column -->
             <div class="col-md-8">
+                {% if admin %}
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            {{ company.company_name }}
+                        </button>
+                        <div class="dropdown-menu">
+                            {% for clist in companylist %}
+                                <a class="dropdown-item" href={% url 'companyhome2' clist.id %}>{{ clist.company_name }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
 
-                <h1><a href="{% url 'companydetails' %}">{{ company.company_name }}</a></h1>
+                {% else %}
+                    <h1><a href="{% url 'companydetails' %}">{{ company.company_name }}</a></h1>
+                {% endif %}
+
+                <br>
+
                 <button type="button"
                         class="btn-warning btn-sm js-create-person"
                         data-url="{% url 'person_update' person.id %}">
@@ -83,11 +100,11 @@
                     </div>
                 </div>
 
-                {% for inspection in filter.qs %}
+                {% for project in filter.qs %}
                     <div class="row pt-3">
-                        <div class="col-8" onclick="window.location='{% url 'detail' inspection.id %}';"
+                        <div class="col-8" onclick="window.location='{% url 'detail' project.id project.project_number %}';"
                              style="cursor: pointer;">
-                            <p>{{ inspection.project_number }}: {{ inspection.title }}</p>
+                            <p>{{ project.project_number }}: {{ project.title }}</p>
                         </div>
                     </div>
                 {% endfor %}
@@ -98,7 +115,7 @@
             <div class="col-md-4">
 
                 <button class="btn btn-lg btn-primary btn-block"
-                        onClick="location.href='../../../inspections/bookinspection'">
+                        onClick="location.href='../../../projects/bookinspection'">
                     Book Inspection
                 </button>
 
@@ -149,7 +166,7 @@
                                             <a href="companydetails">Company Details</a>
                                         </li>
                                         <li>
-                                            <a href="/inspections/bookinspection">Book Inspection</a>
+                                            <a href="/project/bookinspection">Book Inspection</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -222,14 +239,6 @@
     </div>
 
     <script src="{% static 'accounts/js/jquery-3.2.1.min.js' %}"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-            crossorigin="anonymous"></script>
-
 
     </body>
 

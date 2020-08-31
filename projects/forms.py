@@ -1,11 +1,38 @@
 from django import forms
-
+from django.urls import reverse_lazy, reverse
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Field, Div
 from crispy_forms.bootstrap import (
     PrependedText, AppendedText, PrependedAppendedText, FormActions)
 from inspections.models import Inspection
-from projects.models import Project
+from projects.models import Project, ProjectRoles
+from accounts.models import Company, Person, CompanyPerson
+from website.models import lstRoles#, lstMilestones
+from django_select2.forms import Select2MultipleWidget
+
+
+try:
+    from django_select2.forms import Select2Widget
+
+    _select2 = True
+except ImportError:
+    _select2 = False
+
+from popupcrud.views import PopupCrudViewSet
+from popupcrud.widgets import RelatedFieldPopupFormWidget
+
+from django import forms
+from django_popup_view_field.fields import PopupViewField
+from .popups import ColorsPopupView
+
+class ColorForm(forms.Form):
+
+    color = PopupViewField(
+        view_class=ColorsPopupView,
+        popup_dialog_title='What is your favorite color',
+        required=True,
+        help_text='be honest'
+    )
 
 class ProjectForm(forms.ModelForm):
     # department = forms.ModelChoiceField(queryset=department.objects.all())
@@ -96,13 +123,145 @@ class BookInspection(forms.ModelForm):
     )
 
 
-class InspectionForm(forms.Form):
+class ProjectForm(forms.Form):
     item = forms.CharField()
     quantity = forms.IntegerField(label="Qty")
     price = forms.DecimalField()
 
-class InspectionFilterFormHelper(FormHelper):
-    model = Inspection
+
+class ProjectRole_Form(forms.Form):
+    person = forms.ModelMultipleChoiceField(queryset=Person.objects.all(), widget=Select2MultipleWidget)
+    role = forms.ModelMultipleChoiceField(queryset=lstRoles.objects.all(), widget=Select2MultipleWidget)
+
+    helper = FormHelper()
+    helper.form_method = 'POST'
+    #helper.form_id = 'id-project'
+    #action = "{% url 'home' %}"
+    helper.form_action = 'create'
+    #helper.form_class = 'form-horizontal'
+    helper.layout = Layout(
+        Div(
+            Div('person', css_class='col-md-6'),
+            Div('role', css_class='col-md-6'), css_class='row'),
+                    Submit('submit', 'Create Role', css_class="btn-primary"),\
+                    Submit('cancel', 'Cancel'),
+    )
+
+class ProjectCrudViewset(PopupCrudViewSet):
+    model = ProjectRoles
+    form_class = ProjectRole_Form
+    app_name = 'project'
+    list_display = ('title', 'author')
+    list_url = reverse_lazy("library:books")
+    new_url = reverse_lazy("library:new-book")
+    # paginate_by = None # disable pagination
+    related_object_popups = {
+        'author': reverse_lazy("library:new-author")
+    }
+    legacy_crud = False
+
+    item_actions = [
+        ('Approve', 'far fa-thumbs-up', 'approve')
+    ]
+    empty_list_icon = 'fas fa-book'
+    empty_list_message = 'You have not defined any books.<br/>Create a book to get started.'
+
+    @staticmethod
+    def get_edit_url(obj):
+        return reverse_lazy("library:edit-book", kwargs={'pk': obj.pk})
+
+    @staticmethod
+    def get_delete_url(obj):
+        return reverse_lazy("library:delete-book", kwargs={'pk': obj.pk})
+
+    @staticmethod
+    def get_detail_url(obj):
+        return reverse_lazy("library:detail-book", kwargs={'pk': obj.pk})
+
+    def approve(self, request, item_or_list):  # pylint: disable=R0201
+        return True, "Request has been approved"
+
+class ProjectRolesFormHelper(FormHelper):
+    model = ProjectRoles
+    form_method = 'POST'
+    form_tag = False
+    form_show_labels = False
+
+class ProjectMilestone_Form(forms.Form):
+    #milestone = forms.ModelMultipleChoiceField(queryset=lstMilestones.objects.all(), widget=Select2MultipleWidget)
+    role = forms.ModelMultipleChoiceField(queryset=lstRoles.objects.all(), widget=Select2MultipleWidget)
+    start_date = forms.DateField()
+    end_date = forms.DateField()
+    date_completed = forms.DateField()
+
+    helper = FormHelper()
+    helper.form_method = 'POST'
+    # helper.form_id = 'id-project'
+    # action = "{% url 'home' %}"
+    helper.form_action = 'create'
+    # helper.form_class = 'form-horizontal'
+    helper.layout = Layout(
+        Div(
+            Div('milestone', css_class='col-md-6'),
+            Div('role', css_class='col-md-6'), css_class='row'),
+        'start_date', \
+        'end_date',
+        'date_completed',
+        Submit('submit', 'Create Role', css_class="btn-primary"), \
+        Submit('cancel', 'Cancel'),
+    )
+
+
+class ProjectDocument_Form(forms.Form):
+    #milestone = forms.ModelMultipleChoiceField(queryset=lstMilestones.objects.all(), widget=Select2MultipleWidget)
+    role = forms.ModelMultipleChoiceField(queryset=lstRoles.objects.all(), widget=Select2MultipleWidget)
+    start_date = forms.DateField()
+    end_date = forms.DateField()
+    date_completed = forms.DateField()
+
+    helper = FormHelper()
+    helper.form_method = 'POST'
+    # helper.form_id = 'id-project'
+    # action = "{% url 'home' %}"
+    helper.form_action = 'create'
+    # helper.form_class = 'form-horizontal'
+    helper.layout = Layout(
+        Div(
+            Div('milestone', css_class='col-md-6'),
+            Div('role', css_class='col-md-6'), css_class='row'),
+        'start_date', \
+        'end_date',
+        'date_completed',
+        Submit('submit', 'Create Role', css_class="btn-primary"), \
+        Submit('cancel', 'Cancel'),
+    )
+
+class ProjectTask_Form(forms.Form):
+    #milestone = forms.ModelMultipleChoiceField(queryset=lstMilestones.objects.all(), widget=Select2MultipleWidget)
+    role = forms.ModelMultipleChoiceField(queryset=lstRoles.objects.all(), widget=Select2MultipleWidget)
+    start_date = forms.DateField()
+    end_date = forms.DateField()
+    date_completed = forms.DateField()
+
+    helper = FormHelper()
+    helper.form_method = 'POST'
+    # helper.form_id = 'id-project'
+    # action = "{% url 'home' %}"
+    helper.form_action = 'create'
+    # helper.form_class = 'form-horizontal'
+    helper.layout = Layout(
+        Div(
+            Div('milestone', css_class='col-md-6'),
+            Div('role', css_class='col-md-6'), css_class='row'),
+        'start_date', \
+        'end_date',
+        'date_completed',
+        Submit('submit', 'Create Role', css_class="btn-primary"), \
+        Submit('cancel', 'Cancel'),
+    )
+
+class ProjectFilterFormHelper(FormHelper):
+    model = Project
     form_method = 'GET'
     form_tag = False
     form_show_labels = False

@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'filer',
     'mptt',
     'website.apps.WebsiteConfig',
+    'django_popup_view_field',
 ]
 
 MIDDLEWARE = [

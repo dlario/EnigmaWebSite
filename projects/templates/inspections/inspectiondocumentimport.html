@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load i18n bootstrap4 bsmodal %}
+{% load static %}
+{% block extrahead %}
+{{ form.media.css }}
+{{ form.media.js }}
+
+{% endblock extrahead %}
+{% block content %}
+    <script type="text/javascript" src="{% static '/dropzone/dropzone.js' %}"></script>
+<div id="dropzone">
+    <form action="/upload" class="dropzone needsclick" id="demo-upload">
+        <div class="dz-message needsclick">
+            <img class="card-img-top" src="http://placehold.it/300x300"
+                 alt="Card image cap">
+            <div class="dz-message needsclick">
+                Overall
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="dropzone">
+    <form action="/upload" class="dropzone needsclick" id="demo-upload1">
+        <div class="dz-message needsclick">
+            <img class="card-img-top" src="http://placehold.it/300x300"
+                 alt="Card image cap">
+            <div class="dz-message needsclick">
+                General
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="dropzone">
+    <form action="/upload" class="dropzone needsclick" id="demo-upload2">
+        <div class="dz-message needsclick">
+            <img class="card-img-top" src="http://placehold.it/300x300"
+                 alt="Card image cap">
+            <div class="dz-message needsclick">
+                Load Chart
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
+{% endblock %}
